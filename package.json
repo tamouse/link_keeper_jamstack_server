@@ -1,0 +1,14 @@
+{
+  "name": "linkkeeper-jamstack-server",
+  "version": "0.1.0",
+  "description": "the server for the linkkeeper jamstack example",
+  "main": "index.js",
+  "repository": "git@github.com:tamouse/link_keeper_jamstack_server.git",
+  "author": "Tamara Temple <tamouse@gmail.com> (https://github.com/tamouse)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "airtable": "^0.8.1",
+    "dotenv": "^8.2.0"
+  }
+}

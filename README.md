@@ -38,3 +38,32 @@ Visiting the function at <http://localhost:8888/.netlify/functions/hello> and *v
 I don't want to save my API keys and other credentials in the repo. But they need to be available somehow to the service.
 
 Initially, I'm setting up the dev environment using the `dotenv` library which reads a `$PROJECT_ROOT/.env` file. I slapped a `.env.EXAMPLE` in the root of the server. There will probably be one for the client, but okay for now.
+
+Before installing, need to prepare the project:
+
+``` shell
+$ yarn init
+$ yarn add dotenv airtable
+```
+
+Since I'm developing the server as it's only repo, it needs to have the `package.json` file sorted, then install the dependencies for this server. The `dotenv` as said above handles secrets. The `airtable` handles the calls to the Airtable.
+
+Copy `.env.EXAMPLE` to `.env` and put the keys in:
+
+``` shell
+$ cp .env.EXAMPLE .env
+$ chmod 600 .env
+$ echo .env >> .gitignore
+$ edit .env
+
+```
+
+## Building a list function ##
+
+First things, I just want to list all the available records in the airtable, getting as much info as possible, in reverse chronological order.
+
+### Building the bare bones serverless function for listing ###
+
+I'm calling it `link_capture_list.js` and will be following this namning convention for the server by quasi-namespacing the interactions. It's possible it might be better to actually namespace them below `functions`, and I'm open to that, too.
+
+First thing I wanted to verify is that I could actually grab out tokens from the `.env` file, and attempt to connect to airtable. This commit works!
