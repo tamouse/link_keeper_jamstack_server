@@ -67,3 +67,7 @@ First things, I just want to list all the available records in the airtable, get
 I'm calling it `link_capture_list.js` and will be following this namning convention for the server by quasi-namespacing the interactions. It's possible it might be better to actually namespace them below `functions`, and I'm open to that, too.
 
 First thing I wanted to verify is that I could actually grab out tokens from the `.env` file, and attempt to connect to airtable. This commit works!
+
+### Getting all the records ###
+
+The Airtable select function provides a query statement, which is fulfilled by calling a `firstPage` or `eachPage` method.

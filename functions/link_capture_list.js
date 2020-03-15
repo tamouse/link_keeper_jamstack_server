@@ -11,7 +11,7 @@
 
 require("dotenv").config() // pull in the .env fields into process.env
 
-exports.handler = (event, context, callback) => {
+exports.handler = async (event, context, callback) => {
   // sets up the airtable database. Good candidate for refactoring, maybe.
   const Airtable = require("airtable")
   Airtable.configure({
@@ -19,10 +19,33 @@ exports.handler = (event, context, callback) => {
   })
   const linkCaptureBase = Airtable.base(process.env.LINK_CAPTURE_TABLE_ID)
 
-  console.log(linkCaptureBase)
+  try {
+    let records = await linkCaptureBase("Saved Links")
+      .select({
+        view: "Grid view",
+        sort: [{ field: "Capture Date", direction: "desc" }],
+      })
+      .all()
+      .then(result => {
+        return result
+      })
+      .catch(err => {
+        console.log({
+          in: "link_capture_link",
+          after: "linkCaptureBase.select",
+          error: err,
+        })
+        throw err
+      })
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ in: "link_capture_list.js" }),
+    return {
+      statusCode: 200,
+      body: JSON.stringify(records),
+    }
+  } catch (ex) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(ex),
+    }
   }
 }
